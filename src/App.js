@@ -94,11 +94,10 @@ const App = () => {
     
     const inputContainerHeight = document.querySelector('.chat-input-container')?.offsetHeight || 70;
     const headerHeight = 60; // Approximate header height
-    const backButtonHeight = document.querySelector('.back-btn')?.offsetHeight || 0;
     const padding = 20; // Reduced padding for better space utilization
     
     // Calculate proper height considering all elements
-    const totalHeight = inputContainerHeight + headerHeight + backButtonHeight + padding;
+    const totalHeight = inputContainerHeight + headerHeight + padding;
     chatContainerRef.current.style.height = `calc(100vh - ${totalHeight}px)`;
   };
 
@@ -125,9 +124,6 @@ const App = () => {
       setQuestion('');
       setIsFullScreenChat(true);
       
-      // Explicitly reset textarea height
-      
-      
       // Update chat container height after response is received
       setTimeout(updateChatContainerHeight, 100);
       
@@ -150,9 +146,7 @@ const App = () => {
     }
   };
 
-  const handleBackToMain = () => {
-    setIsFullScreenChat(false);
-  };
+  // Function removed since it's no longer used with header replacement
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -167,23 +161,36 @@ const App = () => {
 
   const renderChart = (response) => {
     if (!response || response.graph_needed !== 'yes') return null;
-
+  
     const { graph_type, data } = response;
     
     if (!data || !data.labels || !data.datasets) {
       return <p className="no-data">No valid data available for chart</p>;
     }
-
+  
     const chartData = {
       labels: data.labels || [],
       datasets: [],
     };
-
+  
     const colors = [
-      '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEEAD',
+      '#0077b6','#FF6B6B', '#45B7D1', '#96CEB4', '#FFEEAD',
       '#D4A5A5', '#9B59B6', '#3498DB', '#E74C3C', '#2ECC71',
     ];
-
+  
+    // Helper function to format large numbers
+    const formatNumber = (value) => {
+      if (value >= 1000000000) {
+        return `${(value / 1000000000).toFixed(1)}B`;
+      } else if (value >= 1000000) {
+        return `${(value / 1000000).toFixed(1)}M`;
+      } else if (value >= 1000) {
+        return `${(value / 1000).toFixed(1)}K`;
+      } else {
+        return value.toLocaleString();
+      }
+    };
+  
     const options = {
       responsive: true,
       maintainAspectRatio: false,
@@ -211,19 +218,34 @@ const App = () => {
           color: '#000',
           font: { size: 14 },
         },
-        tooltip: { enabled: true },
+        tooltip: { 
+          enabled: true,
+          callbacks: {
+            label: function(context) {
+              let label = context.dataset.label || '';
+              if (label) {
+                label += ': ';
+              }
+              if (context.parsed.y !== null) {
+                label += formatNumber(context.parsed.y);
+              }
+              return label;
+            }
+          }
+        },
         datalabels: {
           display: (context) => context.chart.config.type === 'bar',
           anchor: 'end',
           align: 'top',
-          formatter: (value) => value.toFixed(1),
+          formatter: (value) => formatNumber(value),
           color: '#000',
           font: { weight: 'bold', size: 12 },
+          offset: 5,
         },
       },
       scales: {},
     };
-
+  
     switch (graph_type) {
       case 'line_chart':
         chartData.datasets = [{
@@ -240,11 +262,24 @@ const App = () => {
           y: {
             beginAtZero: true,
             title: { display: true, text: 'Value', color: '#000', font: { size: 12 } },
-            ticks: { color: '#000', font: { size: 10 } },
+            ticks: { 
+              color: '#000', 
+              font: { size: 10 },
+              callback: function(value) {
+                return formatNumber(value);
+              }
+            },
+            grid: { display: false },
+            // Ensure proper padding for large values
+            afterDataLimits: (scale) => {
+              // Add 10% padding to top of scale for data labels
+              scale.max = scale.max * 1.1;
+            }
           },
           x: {
             title: { display: true, text: 'Time', color: '#000', font: { size: 12 } },
             ticks: { color: '#000', font: { size: 10 } },
+            grid: { display: false },
           },
         };
         return (
@@ -252,7 +287,7 @@ const App = () => {
             <Line data={chartData} options={options} />
           </div>
         );
-
+  
       case 'bar_chart':
         chartData.datasets = [{
           label: data.legend ? data.legend[0] : 'Value',
@@ -266,11 +301,24 @@ const App = () => {
           y: {
             beginAtZero: true,
             title: { display: true, text: 'Value', color: '#000', font: { size: 12 } },
-            ticks: { color: '#000', font: { size: 10 } },
+            ticks: { 
+              color: '#000', 
+              font: { size: 10 },
+              callback: function(value) {
+                return formatNumber(value);
+              }
+            },
+            grid: { display: false },
+            // Add significant padding to top of scale for bar data labels
+            afterDataLimits: (scale) => {
+              // Add 20% padding to top of scale for data labels
+              scale.max = scale.max * 1.2;
+            }
           },
           x: {
             title: { display: true, text: 'Categories', color: '#000', font: { size: 12 } },
             ticks: { color: '#000', font: { size: 10 } },
+            grid: { display: false },
           },
         };
         return (
@@ -278,7 +326,7 @@ const App = () => {
             <Bar data={chartData} options={options} />
           </div>
         );
-
+  
       case 'pie_chart':
         chartData.datasets = [{
           label: data.legend ? data.legend[0] : 'Value',
@@ -302,36 +350,52 @@ const App = () => {
           anchor: 'center',
           align: 'center',
         };
+        
+        // Add tooltip formatter for pie chart as well
+        options.plugins.tooltip = {
+          callbacks: {
+            label: function(context) {
+              const total = context.dataset.data.reduce((sum, val) => sum + val, 0);
+              const percentage = ((context.raw / total) * 100).toFixed(1);
+              return `${context.label}: ${formatNumber(context.raw)} (${percentage}%)`;
+            }
+          }
+        };
+        
         return (
           <div className="pie-chart-wrapper">
             <Pie data={chartData} options={options} />
           </div>
         );
-
+  
       default:
         return <p className="no-data">Unsupported graph type: {graph_type}</p>;
     }
   };
+  
+  // Header component that will be used in both home and chat screens
+  const Header = () => (
+    <header className="app-header">
+      <div className="logo">
+        <img src="/Assets/logo.png" alt="People's Leasing Logo" />
+      </div>
+      <div className="header-icons">
+        <div className="chatbot">
+          <img src="/Assets/AI_ChatBot.png" alt="AI Chatbot" />
+        </div>
+      </div>
+    </header>
+  );
 
   return (
     <div className="app">
-      <header className="app-header">
-        <div className="logo">
-          <img src="/Assets/logo.png" alt="People's Leasing Logo" />
-        </div>
-        <div className="header-icons">
-          <div className="chatbot">
-            <img src="/Assets/AI_ChatBot.png" alt="AI Chatbot" />
-          </div>
-        </div>
-      </header>
+      {!isFullScreenChat && <Header />}
 
       <main className="app-main">
         {isFullScreenChat ? (
           <div className="full-screen-chat">
-            <button className="back-btn action-btn" onClick={handleBackToMain}>
-              <span className="back-arrow">←</span> Back
-            </button>
+            {/* Replaced back button with the header */}
+            <Header />
             <div className="chat-container" ref={chatContainerRef}>
               <div className="chat-messages full-screen-messages">
                 {chatHistory.map((chat, idx) => (

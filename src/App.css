@@ -198,6 +198,7 @@ body {
   font-size: 16px;
   line-height: 1.5;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  text-align: left;
 }
 /* Make sure message content is fully visible */
 .message-content-wrapper {
@@ -254,6 +255,13 @@ body {
   align-items: center;
 }
 
+/* Remove grid lines from charts - additional CSS support */
+canvas {
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
 /* Input area styling */
 .chat-input-container {
   position: fixed;
@@ -266,6 +274,7 @@ body {
   z-index: 10;
   height: auto; /* Allow height to adjust based on content */
   max-height: 150px; /* Set a maximum height */
+  font-family: Arial, sans-serif;
 }
 
 .home-chat-input-container {
@@ -275,6 +284,7 @@ body {
   transform: translateX(-50%);
   width: 100%;
   max-width: 1200px;
+  font-family: Arial, sans-serif;
 }
 
 .chat-input {
@@ -287,6 +297,8 @@ body {
   border-radius: 6px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   align-items: flex-start;
+  width: 90%; /* Added to ensure chat input doesn't stretch to full width */
+  font-family: Arial, sans-serif;
 }
 
 .chat-input textarea {
@@ -305,6 +317,7 @@ body {
   overflow-y: auto;
   line-height: 1.2;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+  font-family: Arial, sans-serif;
 }
 
 .chat-input textarea:focus {
@@ -349,25 +362,6 @@ body {
 .send-icon {
   width: 20px;
   height: 20px;
-}
-
-.back-btn {
-  align-self: flex-start;
-  margin: 10px 20px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  background-color: #fff;
-  color: #000;
-  border: 1px solid #003087;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-weight: 500;
-}
-
-.back-arrow {
-  font-size: 18px;
-  line-height: 1;
 }
 
 /* Error message */
@@ -559,12 +553,6 @@ body {
     max-width: 90%;
   }
 
-  .back-btn {
-    margin: 10px;
-    padding: 6px 12px;
-    font-size: 0.9rem;
-  }
-
   .line-chart-wrapper, .bar-chart-wrapper, .pie-chart-wrapper {
     width: 280px;
     height: 250px;
@@ -674,4 +662,21 @@ body {
 /* Make scrollbar always visible in the chat area */
 .chat-container {
   overflow-y: scroll;
+}
+/* For full-screen chat ("Ask another question...") */
+.chat-input-container .chat-input textarea::placeholder {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  font-style: italic;
+  color: #666;
+}
+
+/* For home page ("Ask a question about our financial performance...") */
+.home-chat-input-container .chat-input textarea::placeholder {
+  font-family: Arial, sans-serif; /* Different font for home page */
+  font-size: 15px;
+  font-weight: 500;
+  font-style: normal;
+  color: #888;
 }
