@@ -178,19 +178,6 @@ const App = () => {
       '#D4A5A5', '#9B59B6', '#3498DB', '#E74C3C', '#2ECC71',
     ];
   
-    // Helper function to format large numbers
-    const formatNumber = (value) => {
-      if (value >= 1000000000) {
-        return `${(value / 1000000000).toFixed(1)}B`;
-      } else if (value >= 1000000) {
-        return `${(value / 1000000).toFixed(1)}M`;
-      } else if (value >= 1000) {
-        return `${(value / 1000).toFixed(1)}K`;
-      } else {
-        return value.toLocaleString();
-      }
-    };
-  
     const options = {
       responsive: true,
       maintainAspectRatio: false,
@@ -227,7 +214,7 @@ const App = () => {
                 label += ': ';
               }
               if (context.parsed.y !== null) {
-                label += formatNumber(context.parsed.y);
+                label += context.parsed.y.toLocaleString();
               }
               return label;
             }
@@ -237,7 +224,7 @@ const App = () => {
           display: (context) => context.chart.config.type === 'bar',
           anchor: 'end',
           align: 'top',
-          formatter: (value) => formatNumber(value),
+          formatter: (value) => value.toLocaleString(),
           color: '#000',
           font: { weight: 'bold', size: 12 },
           offset: 5,
@@ -266,18 +253,16 @@ const App = () => {
               color: '#000', 
               font: { size: 10 },
               callback: function(value) {
-                return formatNumber(value);
+                return value.toLocaleString();
               }
             },
             grid: { display: false },
-            // Ensure proper padding for large values
             afterDataLimits: (scale) => {
-              // Add 10% padding to top of scale for data labels
               scale.max = scale.max * 1.1;
             }
           },
           x: {
-            title: { display: true, text: 'Time', color: '#000', font: { size: 12 } },
+            title: { display: true, text: '', color: '#000', font: { size: 12 } },
             ticks: { color: '#000', font: { size: 10 } },
             grid: { display: false },
           },
@@ -295,6 +280,7 @@ const App = () => {
           backgroundColor: colors.slice(0, data.labels.length),
           borderColor: colors.slice(0, data.labels.length),
           borderWidth: 1,
+          borderRadius: 4,
         }];
         options.plugins.legend.display = false;
         options.scales = {
@@ -305,13 +291,11 @@ const App = () => {
               color: '#000', 
               font: { size: 10 },
               callback: function(value) {
-                return formatNumber(value);
+                return value.toLocaleString();
               }
             },
             grid: { display: false },
-            // Add significant padding to top of scale for bar data labels
             afterDataLimits: (scale) => {
-              // Add 20% padding to top of scale for data labels
               scale.max = scale.max * 1.2;
             }
           },
@@ -351,13 +335,12 @@ const App = () => {
           align: 'center',
         };
         
-        // Add tooltip formatter for pie chart as well
         options.plugins.tooltip = {
           callbacks: {
             label: function(context) {
               const total = context.dataset.data.reduce((sum, val) => sum + val, 0);
               const percentage = ((context.raw / total) * 100).toFixed(1);
-              return `${context.label}: ${formatNumber(context.raw)} (${percentage}%)`;
+              return `${context.label}: ${context.raw.toLocaleString()} (${percentage}%)`;
             }
           }
         };
