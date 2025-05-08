@@ -261,7 +261,7 @@ const App = () => {
         options.scales = {
           y: {
             beginAtZero: true,
-            title: { display: true, text: 'Value', color: '#000', font: { size: 12 } },
+            title: { display: true, text: '', color: '#000', font: { size: 12 } },
             ticks: { 
               color: '#000', 
               font: { size: 10 },
@@ -300,7 +300,7 @@ const App = () => {
         options.scales = {
           y: {
             beginAtZero: true,
-            title: { display: true, text: 'Value', color: '#000', font: { size: 12 } },
+            title: { display: true, text: '', color: '#000', font: { size: 12 } },
             ticks: { 
               color: '#000', 
               font: { size: 10 },
@@ -316,7 +316,7 @@ const App = () => {
             }
           },
           x: {
-            title: { display: true, text: 'Categories', color: '#000', font: { size: 12 } },
+            title: { display: true, text: '', color: '#000', font: { size: 12 } },
             ticks: { color: '#000', font: { size: 10 } },
             grid: { display: false },
           },
