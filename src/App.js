@@ -39,7 +39,7 @@ const App = () => {
   const chatEndRef = useRef(null);
   const textareaRef = useRef(null);
   const chatContainerRef = useRef(null);
-  const backendUrl = 'http://43.204.234.185:8000/';
+  const backendUrl = 'http://65.0.135.93/';
 
   // Scroll to bottom when chat history updates
   useEffect(() => {
@@ -174,9 +174,13 @@ const App = () => {
     };
   
     const colors = [
-      '#0077b6','#FF6B6B', '#45B7D1', '#96CEB4', '#FFEEAD',
+      '#4b68a9','#ed5a3f', '#adb981', '#f8b797', '#FFEEAD',
       '#D4A5A5', '#9B59B6', '#3498DB', '#E74C3C', '#2ECC71',
     ];
+    const BarChart_colors=[
+
+      '#4b68a9'
+    ]
   
     const options = {
       responsive: true,
@@ -277,8 +281,8 @@ const App = () => {
         chartData.datasets = [{
           label: data.legend ? data.legend[0] : 'Value',
           data: data.datasets.map(item => item[0]),
-          backgroundColor: colors.slice(0, data.labels.length),
-          borderColor: colors.slice(0, data.labels.length),
+          backgroundColor: BarChart_colors.slice(0, data.labels.length),
+          borderColor: BarChart_colors.slice(0, data.labels.length),
           borderWidth: 1,
           borderRadius: 4,
         }];
