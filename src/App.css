@@ -245,7 +245,7 @@ body {
   margin-right: auto;
 }
 
-.line-chart-wrapper, .bar-chart-wrapper, .pie-chart-wrapper {
+.line-chart-wrapper, .rbar-chart-wrappe, .pie-chart-wrapper {
   width: 400px;
   height: 350px;
   margin: 0 auto;

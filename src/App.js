@@ -453,14 +453,14 @@ const App = () => {
                   <img src="/Assets/Growth.png" alt="Growth Icon" className="icon" />
                   <h2>Growth</h2>
                 </div>
-                <div className="question-box" onClick={() => handleAskQuestion("How is the overall loan and leasing growth of the company during FY2024")}>
-                  How is the overall loan and leasing growth of the company during FY2024
+                <div className="question-box" onClick={() => handleAskQuestion("How did the overall business performance of the company grow during 2024/25?")}>
+                  How did the overall business performance of the company grow during 2024/25?
                 </div>
-                <div className="question-box" onClick={() => handleAskQuestion("What are the factors that affected growth during the year")}>
-                  What are the factors that affected growth during the year
+                <div className="question-box" onClick={() => handleAskQuestion("What were the key drivers of the company’s growth in FY2024/25?")}>
+                  What were the key drivers of the company’s growth in FY2024/25?
                 </div>
-                <div className="question-box" onClick={() => handleAskQuestion("What is the growth outlook for the next year")}>
-                  What is the growth outlook for the next year
+                <div className="question-box" onClick={() => handleAskQuestion("What is the growth outlook for the next year?")}>
+                  What is the growth outlook for the next year?
                 </div>
               </div>
 
@@ -469,14 +469,14 @@ const App = () => {
                   <img src="/Assets/Profitability.png" alt="Profitability Icon" className="icon" />
                   <h2>Profitability</h2>
                 </div>
-                <div className="question-box" onClick={() => handleAskQuestion("What is the Net Interest Margin in FY2024")}>
-                  What is the Net Interest Margin in FY2024
+                <div className="question-box" onClick={() => handleAskQuestion("What was the company’s profitability in 2024/25 compared to the previous year?")}>
+                  What was the company’s profitability in 2024/25 compared to the previous year?
                 </div>
-                <div className="question-box" onClick={() => handleAskQuestion("What is the ROE in FY2024 and how does it compare to the previous year")}>
-                  What is the ROE in FY2024 and how does it compare to the previous year
+                <div className="question-box" onClick={() => handleAskQuestion("What is the ROE in 2024/25 and how does it compare to the previous year?")}>
+                  What is the ROE in 2024/25 and how does it compare to the previous year?
                 </div>
-                <div className="question-box" onClick={() => handleAskQuestion("How is the dividend payout of the company in FY2024")}>
-                  How is the dividend payout of the company in FY2024
+                <div className="question-box" onClick={() => handleAskQuestion("What is the dividend payout of the company in 2024/25?")}>
+                  What is the dividend payout of the company in 2024/25?
                 </div>
               </div>
 
@@ -485,14 +485,14 @@ const App = () => {
                   <img src="/Assets/Asset Quality.png" alt="Asset Quality Icon" className="icon" />
                   <h2>Asset Quality</h2>
                 </div>
-                <div className="question-box" onClick={() => handleAskQuestion("What is the overall asset quality of the company")}>
-                  What is the overall asset quality of the company
+                <div className="question-box" onClick={() => handleAskQuestion("What is the Non-Performing Loan (NPL) ratio for 2024/25 and how does it compare to previous years?")}>
+                  What is the Non-Performing Loan ratio for 2024/25 and comparison to prior years?
                 </div>
-                <div className="question-box" onClick={() => handleAskQuestion("What is the NPL ratio in FY2024")}>
-                  What is the NPL ratio in FY2024
+                <div className="question-box" onClick={() => handleAskQuestion("How effective were the company’s collection efforts during 2024/25?")}>
+                  How effective were the company’s collection efforts during 2024/25?
                 </div>
-                <div className="question-box" onClick={() => handleAskQuestion("How has asset quality changed over the past year")}>
-                  How has asset quality changed over the past year
+                <div className="question-box" onClick={() => handleAskQuestion("What is the total impairment charge reported for 2024/25, and what were the main drivers behind it?")}>
+                  What is the total impairment charge for 2024/25 and its main drivers??
                 </div>
               </div>
             </div>
