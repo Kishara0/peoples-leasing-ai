@@ -39,7 +39,7 @@ const App = () => {
   const chatEndRef = useRef(null);
   const textareaRef = useRef(null);
   const chatContainerRef = useRef(null);
-  const backendUrl = 'http://65.0.135.93/';
+  const backendUrl = 'http://localhost:8000/';
 
   // Scroll to bottom when chat history updates
   useEffect(() => {
