@@ -39,7 +39,7 @@ const App = () => {
   const chatEndRef = useRef(null);
   const textareaRef = useRef(null);
   const chatContainerRef = useRef(null);
-  const backendUrl = 'http://65.0.135.93/';
+  const backendUrl = 'https://finsightc-backend.enfection.com/';
 
   // Scroll to bottom when chat history updates
   useEffect(() => {
