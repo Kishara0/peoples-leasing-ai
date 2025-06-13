@@ -485,8 +485,8 @@ const App = () => {
                   <img src="/Assets/Asset Quality.png" alt="Asset Quality Icon" className="icon" />
                   <h2>Asset Quality</h2>
                 </div>
-                <div className="question-box" onClick={() => handleAskQuestion("What is the Non-Performing Loan (NPL) ratio for 2024/25 and how does it compare to previous years?")}>
-                  What is the Non-Performing Loan ratio for 2024/25 and comparison to prior years?
+                <div className="question-box" onClick={() => handleAskQuestion("What is the credit rating of the company?")}>
+                  What is the credit rating of the company?
                 </div>
                 <div className="question-box" onClick={() => handleAskQuestion("How effective were the company’s collection efforts during 2024/25?")}>
                   How effective were the company’s collection efforts during 2024/25?
